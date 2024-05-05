@@ -27,7 +27,7 @@ app.use(session({
 
     //MONGO STORE
     store: MongoStore.create({
-        mongoUrl: `mongodb+srv://Ferbadev:${process.env.PASSWORD}@cluster0.qaz6nck.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0`, ttl: 120
+        mongoUrl: `mongodb+srv://talba:talba@clustertalba.vnmlpsv.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=ClusterTalba`, ttl: 120
     })
     
 }))
@@ -36,7 +36,7 @@ initializePassport();
 app.use(passport.initialize())
 app.use(passport.session()) 
 //rutas
-app.use("/api/products", productsRouter);
+app.use("/products", productsRouter);
 app.use("/api/sessions", sessionsRouter);
 app.use("/", viewsRouter);
 //listen
