@@ -1,43 +1,41 @@
 import express from "express";
 const router = express.Router();
-import ProductController from "../controller/product.controller.js";
+import ProductController from "../controllers/product.controller.js";
 const productController = new ProductController();
-//traemos el product manager
-import ProductManager from "../controllers/productManager.js";
-const productManager = new ProductManager();
+
 
 
 //rutas productos
 router.get("/", productController.getProducts);
 //get products
-router.get("/", async (req, res) => {
-  try {
-    const { limit = 10, page = 1, sort, query } = req.query;
+// router.get("/", async (req, res) => {
+//   try {
+//     const { limit = 10, page = 1, sort, query } = req.query;
 
-    const productsList = await productManager.getProducts({
-      limit: parseInt(limit),
-      page: parseInt(page),
-      sort,
-      query,
-    });
+//     const productsList = await productManager.getProducts({
+//       limit: parseInt(limit),
+//       page: parseInt(page),
+//       sort,
+//       query,
+//     });
 
-    res.json({
-      status: "succes",
-      payload: productsList,
-      totalPages: productsList.totalPages,
-      prevPage: productsList.prevPage,
-      nextPage: productsList.nextPage,
-      page: productsList.page,
-      hasPrevPage: productsList.hasPrevPage,
-      hasNextPage: productsList.hasNextPage,
-      prevLink: productsList.prevLink,
-      nextLink: productsList.nextLink,
-    });
-  } catch (error) {
-    console.error("Error al obtener productos en products router", error);
-    res.status(500).send("Error en el servidor");
-  }
-});
+//     res.json({
+//       status: "succes",
+//       payload: productsList,
+//       totalPages: productsList.totalPages,
+//       prevPage: productsList.prevPage,
+//       nextPage: productsList.nextPage,
+//       page: productsList.page,
+//       hasPrevPage: productsList.hasPrevPage,
+//       hasNextPage: productsList.hasNextPage,
+//       prevLink: productsList.prevLink,
+//       nextLink: productsList.nextLink,
+//     });
+//   } catch (error) {
+//     console.error("Error al obtener productos en products router", error);
+//     res.status(500).send("Error en el servidor");
+//   }
+// });
 
 //get product por id
 router.get("/:pid", async (req, res) => {

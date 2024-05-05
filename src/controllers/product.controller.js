@@ -3,26 +3,26 @@ const productService = new ProductService();
 
 
 class ProductController {
-    async crearJuguete(req, res) {
-        const jugueteNuevo = req.body; 
+    async addProduct(req, res) {
+        const newProduct = req.body; 
         try {
-            await jugueteService.crearJuguete(jugueteNuevo);
-            //res.json(jugueteNuevo);
+            await productService.addProduct(newProduct);
+            
             respuesta(res, 200, "Producto creado exitosamente!");
         } catch (error) {
-            //res.status(500).json("Error al crear un juguete nuevo")
+            
             respuesta(res, 500, "Error al crear producto");
         }
     }
 
-    async obtenerJuguetes(req, res) {
+    async getProducts(req, res) {
         try {
-            const juguetes = await jugueteService.obtenerJuguetes();
-                    res.json(juguetes);
+            const products = await ProductService.getProducts();
+                    res.json(products);
         } catch (error) {
-            res.status(500).json("Error al obtener los juguetes");
+            res.status(500).json("Error al obtener los productos");
         }
     }
 }
 
-export default JugueteController;
+export default ProductController;

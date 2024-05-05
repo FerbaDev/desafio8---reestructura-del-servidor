@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
-import ProductManager from "../controllers/productManager.js";
-const productManager = new ProductManager();
+import ProductController from "../controllers/product.controller.js";
+const productController = new ProductController();
 
 router.get("/", (req, res) => {
     res.render("home", {title: "Home", user: req.session.user})
@@ -31,7 +31,7 @@ router.get("/profile", (req, res) => {
 router.get("/products", async (req, res) => {
     try {
       const { page = 1, limit = 5 } = req.query;
-      const products = await productManager.getProducts({
+      const products = await productController.getProducts({
         page: parseInt(page),
         limit: parseInt(limit),
       });
