@@ -1,14 +1,16 @@
 import express from "express";
-const productsRouter = express.Router();
-
+const router = express.Router();
+import ProductController from "../controller/product.controller.js";
+const productController = new ProductController();
 //traemos el product manager
 import ProductManager from "../controllers/productManager.js";
 const productManager = new ProductManager();
 
 
 //rutas productos
+router.get("/", productController.getProducts);
 //get products
-productsRouter.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const { limit = 10, page = 1, sort, query } = req.query;
 
@@ -38,7 +40,7 @@ productsRouter.get("/", async (req, res) => {
 });
 
 //get product por id
-productsRouter.get("/:pid", async (req, res) => {
+router.get("/:pid", async (req, res) => {
   try {
     let id = req.params.pid;
     let product = await productManager.getProductById(id);
@@ -54,7 +56,7 @@ productsRouter.get("/:pid", async (req, res) => {
 });
 
 //post de un nuevo producto
-productsRouter.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   const newProduct = req.body;
 
   try {
@@ -68,7 +70,7 @@ productsRouter.post("/", async (req, res) => {
 });
 
 //actualizar por id
-productsRouter.put("/:pid", async (req, res) => {
+router.put("/:pid", async (req, res) => {
   let id = req.params.pid;
   let productoActualizado = req.body;
 
@@ -81,7 +83,7 @@ productsRouter.put("/:pid", async (req, res) => {
   }
 });
 //eliminar por id
-productsRouter.delete("/:pid", async (req, res) => {
+router.delete("/:pid", async (req, res) => {
   let id = req.params.pid;
 
   try {
@@ -94,4 +96,4 @@ productsRouter.delete("/:pid", async (req, res) => {
 });
 
 //exportamos el router
-export default productsRouter;
+export default router;

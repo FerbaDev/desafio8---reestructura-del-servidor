@@ -1,54 +1,50 @@
-import ProductModel from "../models/product.model.js";
+import ProductModel from "../models/product.model";
 
-class ProductManager {
-  //Métodos:
+class ProductService {
+    async addProduct(newObject){
+        try {
+            let { title, description, price, thumbnail, code, category, stock } =
+            newObject;
 
-  async addProduct(newObject) {
-    try {
-      let { title, description, price, thumbnail, code, category, stock } =
-        newObject;
+            //verificaciones
+            if (
+                !title ||
+                !description ||
+                !price ||
+                !thumbnail ||
+                !code ||
+                !category ||
+                !stock
+            ) {
+                console.log("Todos los campos son obligatorios");
+                return;
+            }
 
-      //verificaciones
+            const productExist = await ProductModel.findOne({ code: code });
+            if (productExist) {
+                console.log("El codigo debe ser unico");
+                return;
+            }
 
-      if (
-        !title ||
-        !description ||
-        !price ||
-        !thumbnail ||
-        !code ||
-        !category ||
-        !stock
-      ) {
-        console.log("Todos los campos son obligatorios");
-        return;
-      }
+            //generar producto
+            const newProduct = new ProductModel({
+                title,
+                description,
+                price,
+                thumbnail,
+                category,
+                code,
+                stock,
+                status: true,
+            });
+            return await newProduct.save();
+        } catch (error) {
+            throw new Error("Error al crear el producto");
+        }
 
-      const productExist = await ProductModel.findOne({ code: code });
-      if (productExist) {
-        console.log("El codigo debe ser unico");
-        return;
-      }
-
-      //generar producto
-      const newProduct = new ProductModel({
-        title,
-        description,
-        price,
-        thumbnail,
-        category,
-        code,
-        stock,
-        status: true,
-      });
-
-      await newProduct.save();
-    } catch (error) {
-      console.log("error al cargar producto", error);
-      throw error;
     }
-  }
 
-  //get products
+    //get products
   async getProducts({ limit = 5, page = 1, sort, query } = {}) {
     try {
       const skip = (page - 1) * limit;
@@ -145,4 +141,4 @@ class ProductManager {
   }
 }
 
-export default ProductManager;
+export default ProductService;
