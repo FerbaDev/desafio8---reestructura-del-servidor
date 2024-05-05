@@ -37,7 +37,8 @@ class ProductService {
                 stock,
                 status: true,
             });
-            return await newProduct.save();
+            await newProduct.save();
+            return newProduct;
         } catch (error) {
             throw new Error("Error al crear el producto");
         }
