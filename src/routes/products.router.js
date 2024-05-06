@@ -7,6 +7,7 @@ const productController = new ProductController();
 
 //rutas productos
 router.get("/", productController.getProducts);
+router.get("/:pid", productController.getProductById)
 //get products
 // router.get("/", async (req, res) => {
 //   try {

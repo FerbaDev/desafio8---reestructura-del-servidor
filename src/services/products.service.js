@@ -46,7 +46,7 @@ class ProductService {
     }
 
     //get products
-  async getProducts({ limit = 5, page = 1, sort, query } = {}) {
+  async getProducts(limit = 5, page = 1, sort, query) {
     try {
       const skip = (page - 1) * limit;
       let queryOptions = {};
@@ -128,6 +128,7 @@ class ProductService {
       console.log("Error al actualizar el producto", error);
     }
   }
+  // eliminar producto
   async deleteProduct(id) {
     try {
       const deleteProduct = await ProductModel.findByIdAndDelete(id);
