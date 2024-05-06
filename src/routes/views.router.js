@@ -28,6 +28,7 @@ router.get("/profile", (req, res) => {
     res.render("profile", {user: req.session.user})
 })
 
+
 router.get("/products", async (req, res) => {
     try {
       const { page = 1, limit = 5 } = req.query;

@@ -21,7 +21,7 @@ class ProductController {
             const products = await ProductService.getProducts(limit, page, sort, query);
                     res.json(products);
         } catch (error) {
-            res.status(500).json("Error al obtener los productos");
+            res.status(500).json("Error al obtener los productos en controller");
         }
     }
     async getProductById(req, res) {
